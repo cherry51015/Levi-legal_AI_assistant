@@ -79,7 +79,7 @@ To launch the Streamlit UI:
 streamlit run app.py
 ```
 
-Open in browser at **[http://.](http://...........)**.
+Open in browser at **[http://.]([https://agent-translator-mgtwfgmztybxyfkw9pbddx.streamlit.app/])**.
 
 ---
 
