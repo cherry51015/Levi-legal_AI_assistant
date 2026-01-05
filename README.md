@@ -7,7 +7,6 @@ The system combines **LLM-powered reasoning** with **custom document pipelines**
 
 Your multilingual, safe, and intelligent legal document companion — upload files, ask questions, or chat freely with general knowledge, all while ensuring no fabricated legal advice
 
-![Try the app here](https://agent-translator-mgtwfgmztybxyfkw9pbddx.streamlit.app/)
 ---
 
 ## 🚀 Features
@@ -79,7 +78,7 @@ To launch the Streamlit UI:
 streamlit run app.py
 ```
 
-Open in browser at **[http://.]([https://agent-translator-mgtwfgmztybxyfkw9pbddx.streamlit.app/])**.
+Open in browser at [http://.]([https://agent-translator-mgtwfgmztybxyfkw9pbddx.streamlit.app/])
 
 ---
 
