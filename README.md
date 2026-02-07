@@ -93,18 +93,6 @@ Open in browser at **[https://agent-translator-mgtwfgmztybxyfkw9pbddx.streamlit.
 3. Review AI outputs, copy insights, or export JSON results.
 
 ---
-Perfect 👍 since it’s for a **GitHub README**, here’s the **clean, optimized, and GitHub-rendering–friendly** version of your **🎥 Demo** section — formatted with proper Markdown and clickable Drive preview links (since Drive images can’t directly render in README):
-
----
-
-Got it ✅ — you want your **GitHub README** demo section to:
-
-* **Show the image thumbnails** directly in README (so they’re visible)
-* **Link those images** to the **Drive video demos** when clicked
-
-Here’s the correct, neat, and GitHub-friendly version 👇
-
----
 
 ## 🎥 Demo
 
