@@ -11,6 +11,9 @@ Your multilingual, safe, and intelligent legal document companion — upload fil
 
 ## 🚀 Features
 
+[![Features]([https://drive.google.com/file/d/13l9lmqnS_uvUb2gcQ6FiClmLsY1A-CKh/view?usp=sharing])
+
+
 * **📂 Document Upload & Analysis** – Upload legal files (PDF, DOCX, TXT) and run AI-powered verification, clause extraction, and compliance checks.
 * **💬 Chat with Your Document** – Ask **document-specific questions** in plain language; the AI retrieves context-aware answers.
 * **🌍 Multi-Language Support** – Ask questions in different languages and receive meaningful responses.
