@@ -11,7 +11,7 @@ Your multilingual, safe, and intelligent legal document companion — upload fil
 
 ## 🚀 Features
 
-[![Features]([https://drive.google.com/file/d/13l9lmqnS_uvUb2gcQ6FiClmLsY1A-CKh/view?usp=sharing])
+![Features Screenshot](https://raw.githubusercontent.com/cherry51015/Levi-legal_AI_assistant/main/data/samples/Screenshot%202026-02-08%20000112.png)
 
 
 * **📂 Document Upload & Analysis** – Upload legal files (PDF, DOCX, TXT) and run AI-powered verification, clause extraction, and compliance checks.
