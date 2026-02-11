@@ -81,11 +81,10 @@ To launch the Streamlit UI:
 streamlit run app.py
 ```
 
-Open in browser at **[https://agent-translator-mgtwfgmztybxyfkw9pbddx.streamlit.app/]**(https://agent-translator-mgtwfgmztybxyfkw9pbddx.streamlit.app/)
+Open in browser at **[https://agent-translator-mgtwfgmztybxyfkw9pbddx.streamlit.app/]**
 
 ### For more Demo and Screenshots 
-**[https://drive.google.com/drive/folders/1lMOVf16aaa84_eu4Uv-0zCsvFVwEC49W?usp=sharing]**(link here)
----
+***[https://drive.google.com/drive/folders/1lMOVf16aaa84_eu4Uv-0zCsvFVwEC49W?usp=sharing]***
 
 ## 📌 Usage
 
