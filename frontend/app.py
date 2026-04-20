@@ -11,14 +11,10 @@ st.set_page_config(
 st.title("⚖️ Levi Legal AI Assistant")
 st.subheader("Upload, Analyze & Understand Legal Documents Easily")
 
-# -----------------------------
-# API URL from environment (fallback to localhost)
-# -----------------------------
+
 API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
 
-# -----------------------------
-# Sidebar: Global Reset Button
-# -----------------------------
+
 st.sidebar.header("Controls")
 if st.sidebar.button("🔄 Reset System"):
     try:
@@ -30,18 +26,13 @@ if st.sidebar.button("🔄 Reset System"):
     except Exception as e:
         st.sidebar.error(f"⚠️ Error: {e}")
 
-# -----------------------------
-# Sidebar: Mode selection
-# -----------------------------
+-
 st.sidebar.header("Features")
 mode = st.sidebar.radio(
     "Choose Mode",
     ["Upload Document", "Chat / QA", "Document Verifier", "Briefings"]
 )
 
-# -----------------------------
-# Upload Document
-# -----------------------------
 if mode == "Upload Document":
     st.header("📄 Upload Your Legal Document")
     uploaded_file = st.file_uploader(
@@ -59,9 +50,6 @@ if mode == "Upload Document":
             except Exception as e:
                 st.error(f"⚠️ Upload failed: {e}")
 
-# -----------------------------
-# Chat / QA
-# -----------------------------
 elif mode == "Chat / QA":
     st.header("💬 Ask Questions About Your Document")
     query = st.text_area("Enter your question", height=100)
@@ -77,9 +65,7 @@ elif mode == "Chat / QA":
                 except Exception as e:
                     st.error(f"⚠️ Error connecting to API: {e}")
 
-# -----------------------------
-# Document Verifier
-# -----------------------------
+
 elif mode == "Document Verifier":
     st.header("📝 Document Verifier")
     if st.button("Run Verifier"):
@@ -91,9 +77,7 @@ elif mode == "Document Verifier":
             except Exception as e:
                 st.error(f"⚠️ Error connecting to API: {e}")
 
-# -----------------------------
-# Briefings
-# -----------------------------
+
 elif mode == "Briefings":
     st.header("📑 Generate Document Briefings")
     if st.button("Generate Briefings"):
@@ -105,9 +89,7 @@ elif mode == "Briefings":
             except Exception as e:
                 st.error(f"⚠️ Error connecting to API: {e}")
 
-# -----------------------------
-# Footer
-# -----------------------------
+
 st.markdown("---")
 st.markdown(
     """
