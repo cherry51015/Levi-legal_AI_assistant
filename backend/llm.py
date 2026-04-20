@@ -18,12 +18,12 @@ from langdetect import detect_langs
 
 from utils.helpers import chunk_text
 
-# ========== CONFIG ==========
+# CONFIG 
 INDEX_PATH = "data/faiss_index.bin"
 META_PATH = "data/faiss_index.bin.meta.json"
 TOP_K = 5
 GEMINI_MODEL = "gemini-1.5-flash"
-# ============================
+
 
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
@@ -31,9 +31,9 @@ if not GEMINI_API_KEY:
     raise ValueError("❌ No Gemini API key found.")
 genai.configure(api_key=GEMINI_API_KEY)
 
-# -----------------------------
+
 # Multi-Language OCR Helpers
-# -----------------------------
+
 INDIAN_LANGUAGES = ["hin", "tam", "tel", "ben", "mar", "guj", "kan", "mal", "pan"]
 
 def detect_languages(text_chunk):
@@ -83,9 +83,9 @@ def load_document(path):
         raise ValueError(f"Unsupported file format: {ext}")
     return text.strip()
 
-# -----------------------------
+
 # FAISS + Embeddings
-# -----------------------------
+
 def embed_texts(texts):
     if isinstance(texts, str):
         texts = [texts]
@@ -139,7 +139,7 @@ def ask_gemini(query, document=None, mode="chat", context_type=None):
     If document is large, splits into chunks and processes each sequentially.
     Combines outputs into a single structured answer.
     """
-    # --- Friendly / casual check ---
+    # Friendly / casual check 
     friendly_resp = get_friendly_response(query)
     if friendly_resp:
         return friendly_resp
@@ -203,7 +203,7 @@ def _ask_gemini_single(question, retrieved=None, mode="chat", context_type=None)
     except Exception as e:
         return f"⚠️ Error: {e}"
 
-# -----------------------------
+
 # Friendly / Casual Chat
 def main():
     print("⚖️ Legal AI Assistant is starting...")
@@ -259,9 +259,9 @@ def main():
             print("⚠️ For specific legal advice or next steps, please consult a qualified legal professional.")
             continue
 
-        # -----------------------------
+     
         # Brief Mode (chunked)
-        # -----------------------------
+       
         if query.lower().strip() == "brief mode":
             if last_document:
                 print("📑 Generating detailed structured briefings (JSON)...")
@@ -278,9 +278,8 @@ def main():
                 print("⚠️ No document loaded. Please load a document before using Brief Mode.")
             continue
 
-        # -----------------------------
         # Document Verifier (chunked)
-        # -----------------------------
+ 
         elif query.lower().strip() == "document verifier":
             if last_document:
                 print("📋 Running Document Verifier...")
@@ -295,14 +294,12 @@ def main():
                 print("⚠️ No document loaded. Please load a document first.")
             continue
 
-        # -----------------------------
         # Detect intent
-        # -----------------------------
+   
         intent = analyze_query_intent(query, last_document)
 
-        # -----------------------------
         # Translation
-        # -----------------------------
+    
         if intent == "translate":
             if last_document and last_document.strip():
                 answer = ask_gemini(query, last_document, mode="translate", context_type="whole_doc")
@@ -313,17 +310,16 @@ def main():
                 continue
 
 
-        # -----------------------------
         # Whole-document QA / Summaries (chunked)
-        # -----------------------------
+    
         elif intent == "document_qa" and last_document:
             answer = ask_gemini(query, last_document, mode="doc_qa", context_type="whole_doc")
             print("\n🤖 Document Summary & Key Terms Explained:\n", answer)
             last_answer = answer
 
-        # -----------------------------
+       
         # General RAG search / out-of-context QA
-        # -----------------------------
+       
         else:
             retrieved = search(index, meta, query)
             out_of_context = is_out_of_context(query, retrieved, last_document)
