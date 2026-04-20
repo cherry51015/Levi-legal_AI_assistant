@@ -17,9 +17,9 @@ else:
 
 
 
-# -----------------------------
+
 # Import your tools
-# -----------------------------
+
 from llm import ask_gemini  # chat engine
 from verifier import run_document_verifier
 from briefings import run_brief_mode
@@ -29,18 +29,10 @@ from utils.embeddings import embed_texts
 from utils.file_loader import load_document  # text extraction
 import numpy as np
 import faiss
-# -----------------------------
+
 
 app = FastAPI(title="Legal AI Assistant Prototype")
 
-# Allow CORS for web front-end (hackathon demo)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 
 # Store globally
@@ -82,10 +74,8 @@ async def upload_document(file: UploadFile = File(...)):
     }
 
 
-
-# -----------------------------
 # Chat endpoint (always available)
-# -----------------------------
+
 @app.post("/chat")
 async def chat(query: str):
     global uploaded_doc_text
@@ -93,9 +83,9 @@ async def chat(query: str):
     answer = ask_gemini(query, document=context, mode="chat")
     return {"query": query, "answer": answer}
 
-# -----------------------------
+
 # Document Verifier endpoint
-# -----------------------------
+
 @app.get("/verifier")
 async def document_verifier():
     if not uploaded_doc_text or uploaded_doc_index is None:
@@ -106,9 +96,8 @@ async def document_verifier():
 
 
 
-# -----------------------------
 # Briefings endpoint
-# -----------------------------
+
 @app.get("/briefings")
 async def document_briefings():
     if not uploaded_doc_text:
@@ -119,20 +108,9 @@ async def document_briefings():
 
 
 
-# -----------------------------
-# Visualization endpoint (placeholder)
-# -----------------------------
-# @app.get("/visualizer")
-# async def document_visualizer():
-#     if not uploaded_doc_text:
-#         raise HTTPException(status_code=400, detail="⚠️ Upload a document first to run visualization.")
-#     vis_json = run_visualizer(uploaded_doc_text)
-#     return vis_json
 
-
-# -----------------------------
 # Health check endpoint
-# -----------------------------
+
 @app.get("/health")
 async def health_check():
     return {"status": "✅ Legal AI Assistant is up and running!"}
