@@ -2,9 +2,9 @@ import faiss
 import json
 import numpy as np
 
-# ===============================
+
 # Step 1: Load embeddings.jsonl
-# ===============================
+
 embeddings = []
 ids = []
 texts = []
@@ -19,9 +19,8 @@ with open("embeddings.jsonl", "r", encoding="utf-8") as f:
 embeddings = np.array(embeddings, dtype="float32")
 print(f"✅ Loaded {len(embeddings)} embeddings with dimension {embeddings.shape[1]}")
 
-# ===============================
 # Step 2: Create FAISS index
-# ===============================
+
 dimension = embeddings.shape[1]
 
 # Normalize embeddings for cosine similarity (better for semantic search)
@@ -31,9 +30,9 @@ index = faiss.IndexFlatIP(dimension)
 index.add(embeddings)
 print(f"✅ FAISS index built with {index.ntotal} vectors")
 
-# ===============================
+
 # Step 3: Save FAISS index + Metadata
-# ===============================
+
 faiss.write_index(index, "faiss_index.bin")
 
 metadata = {
@@ -46,9 +45,7 @@ with open("faiss_index.bin.meta.json", "w", encoding="utf-8") as f:
 
 print("💾 Saved index as faiss_index.bin and metadata as faiss_index.bin.meta.json")
 
-# ===============================
-# Step 4: Example Query
-# ===============================
+
 index = faiss.read_index("faiss_index.bin")
 
 query = embeddings[0].reshape(1, -1)
