@@ -94,8 +94,10 @@ async def chat(query: str):
 async def document_verifier():
     if not uploaded_doc_text or uploaded_doc_index is None:
         raise HTTPException(status_code=400, detail="⚠️ Upload a document first to run the verifier.")
-    result = run_document_verifier(uploaded_doc_text, uploaded_doc_chunks, uploaded_doc_index, FAISS_DOCS)
-
+    result = run_document_verifier(
+        uploaded_doc_text, uploaded_doc_chunks, uploaded_doc_index,
+        GLOBAL_FAISS_INDEX, FAISS_DOCS
+    )
     return result
 
 
