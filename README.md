@@ -26,39 +26,59 @@ The system combines **LLM reasoning (Gemini)** with a **hybrid BM25 + dense retr
 ## 🏗️ Architecture
 
 ```
-                         ┌─────────────────────┐
-                         │   Streamlit UI       │
-                         │      (app.py)        │
-                         └──────────┬───────────┘
-                                    │
-                         ┌──────────▼───────────┐
-                         │   FastAPI Backend      │
-                         │      (main.py)         │
-                         │  /upload /chat          │
-                         │  /verifier /briefings    │
-                         └──────────┬───────────┘
-                                    │
-        ┌───────────────────────────┼───────────────────────────┐
-        │                            │                            │
-┌───────▼────────┐         ┌────────▼────────┐         ┌────────▼─────────┐
-│   llm.py         │         │  verifier.py     │         │  briefings.py      │
-│  ask_gemini()      │         │  rule checks +    │         │  run_brief_mode()   │
-│  (Gemini 1.5 Flash) │         │  hybrid precedent  │         │  (structured JSON)   │
-└───────┬────────┘         │  search           │         └───────────────────┘
-        │                   └────────┬────────┘
-        │                            │
-        └──────────────┬─────────────┘
-                        │
-              ┌─────────▼──────────┐
-              │  hybrid_retriever.py │
-              │  BM25 + dense FAISS   │
-              │  (LangChain Ensemble)  │
-              └─────────┬──────────┘
-                        │
-              ┌─────────▼──────────┐
-              │  data/faiss_index.bin │
-              │  153K+ legal clauses   │
-              └────────────────────┘
+                       ┌───────────────────────────────────────────────────────────────┐
+│                     Streamlit Frontend                        │
+│                         app.py                                │
+└───────────────────────────────┬───────────────────────────────┘
+                                │
+                                ▼
+┌───────────────────────────────────────────────────────────────┐
+│                      FastAPI Backend                          │
+│                         main.py                               │
+│                                                               │
+│  Endpoints:                                                   │
+│  • /upload                                                    │
+│  • /chat                                                      │
+│  • /verifier                                                  │
+│  • /briefings                                                 │
+└───────────────┬───────────────────────┬───────────────────────┘
+                │                       │
+                │                       │
+                ▼                       ▼
+      ┌───────────────────┐    ┌────────────────────┐
+      │      llm.py       │    │    verifier.py    │
+      │───────────────────│    │────────────────────│
+      │ • ask_gemini()    │    │ • Rule checks     │
+      │ • Gemini 1.5 Flash│    │ • Hybrid          │
+      │                   │    │   precedent search│
+      └─────────┬─────────┘    └─────────┬─────────┘
+                │                        │
+                └────────────┬───────────┘
+                             │
+                             │
+                ┌────────────▼────────────┐
+                │     briefings.py        │
+                │─────────────────────────│
+                │ • run_brief_mode()      │
+                │ • Structured JSON       │
+                └────────────┬────────────┘
+                             │
+                             ▼
+         ┌─────────────────────────────────────┐
+         │       hybrid_retriever.py           │
+         │─────────────────────────────────────│
+         │ • BM25 Retrieval                    │
+         │ • Dense FAISS Retrieval             │
+         │ • LangChain Ensemble Retriever      │
+         └──────────────────┬──────────────────┘
+                            │
+                            ▼
+         ┌─────────────────────────────────────┐
+         │        Vector Index Storage          │
+         │─────────────────────────────────────│
+         │ data/faiss_index.bin                │
+         │ 153K+ Legal Clauses                 │
+         └─────────────────────────────────────┘
 ```
 
 **Note on the CLI vs. the API:** `llm.py` run standalone (`python llm.py`) has the fullest query-routing logic — it distinguishes document-QA, translation, general-knowledge, and corpus-RAG intents via `analyze_query_intent()` and `is_out_of_context()`. The FastAPI `/chat` endpoint currently sends the entire uploaded document as context on every call, without that routing layer. Wiring the same routing into `/chat` is the next planned step — see [Roadmap](#-roadmap).
