@@ -19,17 +19,13 @@ def load_faiss_index():
     return index, meta
 
 def search_similar_docs(query_text, top_k=TOP_K):
+    from hybrid_retriever import hybrid_search
     index, meta = load_faiss_index()
-    q_emb = embed_texts(query_text)
-    scores, indices = index.search(q_emb, top_k)
-    results = []
-    for idx, score in zip(indices[0], scores[0]):
-        results.append({
-            "doc_id": meta["ids"][idx],
-            "snippet": meta["texts"][idx][:200],
-            "similarity": float(score)
-        })
-    return results
+    fused = hybrid_search(index, meta, query_text, top_k)
+    return [
+        {"doc_id": r["id"], "snippet": r["text"][:200], "similarity": r["score"]}
+        for r in fused
+    ]
 
 # -----------------------------
 # Rule-based checklist
