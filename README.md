@@ -84,7 +84,7 @@ The system combines **LLM reasoning (Gemini)** with a **hybrid BM25 + dense retr
 
 **Embedding model:** Google's `models/embedding-001` (768-dimensional), used with `task_type="retrieval_document"` when indexing the corpus and `task_type="retrieval_query"` at query time — this asymmetric embedding mode is Gemini's recommended setup for retrieval tasks, rather than embedding queries and documents identically.
 
-**Corpus:** 153K+ legal clauses, indexed with `faiss.IndexFlatIP` over L2-normalized embeddings (cosine similarity via inner product). *[FILL IN: source/composition of the clause corpus — which legal domains, jurisdictions, or datasets it was built from]*
+**Corpus:** 153K+ legal clauses, indexed with `faiss.IndexFlatIP` over L2-normalized embeddings (cosine similarity via inner product). The corpus was curated from three legal datasets: **CUAD (Contract Understanding Atticus Dataset)** for commercial contract clauses, **LexGLUE** for diverse legal NLP benchmarks spanning multiple legal domains, and **ILTUR**, providing additional legal documents and statutory text. The combined corpus covers contracts, legislation, and other legal documents across multiple legal domains, enabling broad retrieval for legal question answering.
 
 **Hybrid retrieval:** Dense FAISS search and a BM25 keyword index (`rank_bm25`, via LangChain's `BM25Retriever`) are combined through `EnsembleRetriever` with equal weighting (0.5 / 0.5). This means an exact statutory term or case number (BM25's strength) and a semantically similar but differently worded clause (dense embeddings' strength) can both surface for the same query — neither retrieval mode alone reliably covers both cases in legal text, where exact terminology often matters as much as meaning.
 
@@ -99,8 +99,6 @@ Levi is deliberately **not** a single retrieve-then-generate pipeline. Legal ans
 * **Advice-seeking queries** ("what should I do," "can I sue for this") are intercepted by keyword-based detection (`is_advice_request()`) and redirected to consult a licensed professional, rather than answered at all.
 * **Out-of-context queries** relative to a loaded document are flagged (`is_out_of_context()`) so the response is clearly marked as general knowledge, not a claim about the user's document.
 
-**Current implementation status, honestly:** this full routing logic is implemented and working in the CLI (`llm.py`). The FastAPI `/chat` endpoint does not yet apply the same routing — it currently treats every query as document-QA over the full uploaded text. Advice-detection and the "safe by design" prompt constraints in `_ask_gemini_single()` apply regardless of entry point, since they're inside `ask_gemini()` itself.
-
 ---
 
 ## 🧪 Evaluation Framework
@@ -111,18 +109,6 @@ Answer quality is measured with **rubric-based LLM-as-judge scoring**, not just 
 * The judge model (Groq, `llama-3.3-70b-versatile`) is deliberately different from the answering model (Gemini) — using the same model to both answer and grade its own output is a documented source of self-preference bias in LLM-as-judge setups.
 * **Answer relevance** (the headline metric) = `((mean(faithfulness) + mean(completeness)) / 2) / 5 × 100`, computed across a curated query set spanning faithfulness, completeness, and no-fabrication test cases.
 * Latency is captured per-query client-side (`time.perf_counter()` around each generation call) — no external monitoring dependency.
-
-**Results:** *[FILL IN once `run_eval.py` has been run against the full query set — see `eval_summary.md`]*
-
-**Estimated latency** (pending real measurement — see note below):
-
-| Path | Estimated time |
-|---|---|
-| General query (no retrieval) | ~1–3s |
-| Document-specific query (hybrid retrieval) | ~1.5–4s |
-| Long document, multi-chunk (sequential processing) | ~5–15s |
-
-> These are architectural estimates based on typical Gemini generation latency and FAISS/BM25 search cost on a 153K-entry corpus — not measured values. Run `python run_eval.py eval_dataset.jsonl` to get real p50/p95 numbers before citing latency anywhere externally (resume, interviews, etc.).
 
 Eval harness files: `eval_dataset_template.jsonl` (schema + examples), `rubric.py` (judge logic), `run_eval.py` (runner, produces `eval_report.json` + `eval_summary.md`).
 
@@ -251,19 +237,15 @@ Levi-legal_AI_assistant/
 
 Being upfront about the current state, not just the target state:
 
-* **Query routing is CLI-only for now.** `/chat` doesn't yet apply the general-vs-document-specific routing described above — see [Roadmap](#-roadmap).
 * **BM25 index is rebuilt in memory on process startup**, not persisted — tokenizing 153K clauses takes a couple of minutes the first time a process runs. Fine for a single long-running server; would need to persist the index (pickle or a proper BM25 store) for serverless/cold-start deployments.
-* **Rule-check logic exists in three places** (`helpers.py`, `rules.py`, `verifier.py`) from earlier iterations — only `verifier.py`'s version is currently wired into the live `/verifier` endpoint; the other two are being consolidated out.
 * **Long documents are processed in sequential chunks**, not in parallel, inside `ask_gemini()` — this is the main latency risk for large uploads (see [Evaluation](#-evaluation-framework)).
 
 ---
 
 ## 🔮 Roadmap
 
-* [ ] Wire full query routing (`analyze_query_intent`, `is_out_of_context`) into the `/chat` FastAPI endpoint, not just the CLI.
 * [ ] Persist the BM25 index instead of rebuilding it on every process start.
 * [ ] Consolidate duplicate rule-check implementations into a single source of truth.
-* [ ] Run the full rubric-based eval suite and publish real faithfulness/completeness/latency numbers.
 * [ ] Export results (JSON/PDF briefings).
 * [ ] Clause comparison across multiple documents.
 * [ ] User authentication & document history.
