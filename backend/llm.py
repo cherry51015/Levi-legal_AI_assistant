@@ -124,7 +124,7 @@ def load_index():
     with open(META_PATH, "r", encoding="utf-8") as f:
         meta = json.load(f)
     return index, meta
-
+''' ##used previously for my vecotor search ##
 def search(index, meta, query, k=TOP_K):
     q_emb = embed_texts(query)
     scores, indices = index.search(q_emb, k)
@@ -134,6 +134,10 @@ def search(index, meta, query, k=TOP_K):
         case_text = meta["texts"][idx]
         results.append({"id": case_id, "score": float(score), "text": case_text})
     return results
+  '''
+## later improved to this hybird search
+def search(index, meta, query, k=TOP_K):
+    return hybrid_search(index, meta, query, k)
 def ask_gemini(query, document=None, mode="chat", context_type=None):
     """
     Handles chunked documents for long input texts.
