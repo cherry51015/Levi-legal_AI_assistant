@@ -1,6 +1,7 @@
 from utils.helpers import read_multiline_input, is_advice_request, get_friendly_response,analyze_query_intent,is_out_of_context
 from verifier import run_document_verifier
 from briefings import run_brief_mode
+from hybrid_retriever import hybrid_search
 from dotenv import load_dotenv
 import faiss
 import json
