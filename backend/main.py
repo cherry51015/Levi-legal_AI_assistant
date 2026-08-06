@@ -7,6 +7,11 @@ import re
 import json
 import os
 
+import faiss
+
+FAISS_INDEX_PATH = "data/faiss_index.bin"
+GLOBAL_FAISS_INDEX = faiss.read_index(FAISS_INDEX_PATH) if os.path.exists(FAISS_INDEX_PATH) else None
+
 FAISS_META_PATH = "data/faiss_index.bin.meta.json"
 if os.path.exists(FAISS_META_PATH):
     with open(FAISS_META_PATH, "r", encoding="utf-8") as f:
