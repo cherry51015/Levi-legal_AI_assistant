@@ -26,7 +26,7 @@ The system combines **LLM reasoning (Gemini)** with a **hybrid BM25 + dense retr
 ## 🏗️ Architecture
 
 ```
-                       ┌───────────────────────────────────────────────────────────────┐
+┌───────────────────────────────────────────────────────────────┐
 │                     Streamlit Frontend                        │
 │                         app.py                                │
 └───────────────────────────────┬───────────────────────────────┘
@@ -45,9 +45,9 @@ The system combines **LLM reasoning (Gemini)** with a **hybrid BM25 + dense retr
                 │                       │
                 │                       │
                 ▼                       ▼
-      ┌───────────────────┐    ┌────────────────────┐
+      ┌───────────────────┐    ┌───────────────────┐
       │      llm.py       │    │    verifier.py    │
-      │───────────────────│    │────────────────────│
+      │───────────────────│    │───────────────────│
       │ • ask_gemini()    │    │ • Rule checks     │
       │ • Gemini 1.5 Flash│    │ • Hybrid          │
       │                   │    │   precedent search│
@@ -74,11 +74,12 @@ The system combines **LLM reasoning (Gemini)** with a **hybrid BM25 + dense retr
                             │
                             ▼
          ┌─────────────────────────────────────┐
-         │        Vector Index Storage          │
+         │        Vector Index Storage         │
          │─────────────────────────────────────│
          │ data/faiss_index.bin                │
          │ 153K+ Legal Clauses                 │
          └─────────────────────────────────────┘
+         
 ```
 
 **Note on the CLI vs. the API:** `llm.py` run standalone (`python llm.py`) has the fullest query-routing logic — it distinguishes document-QA, translation, general-knowledge, and corpus-RAG intents via `analyze_query_intent()` and `is_out_of_context()`. The FastAPI `/chat` endpoint currently sends the entire uploaded document as context on every call, without that routing layer. Wiring the same routing into `/chat` is the next planned step — see [Roadmap](#-roadmap).
