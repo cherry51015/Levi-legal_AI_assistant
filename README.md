@@ -200,7 +200,7 @@ python run_eval.py eval_dataset.jsonl
 ## 🎥 Demo
 
 **1. Upload Document**
-[![Upload Demo](https://drive.google.com/file/d/1XlUHu1AnTYOagqHszInm6XFz4CCgUG9T/view?usp=sharing)](https://drive.google.com/file/d/1XlUHu1AnTYOagqHszInm6XFz4CCgUG9T/view?usp=sharing)
+[![Upload Demo](https://drive.google.com/file/d/1XlUHu1AnTYOagqHszInm6XFz4CCgUG9T/)](https://drive.google.com/file/d/1XlUHu1AnTYOagqHszInm6XFz4CCgUG9T/view?usp=sharing)
 
 **2. Run Verifier**
 [![Verifier Demo](https://drive.google.com/file/d/1X7_hkTqdu2bfEHCcU0ybmFhQKxZ79Gl0/view?usp=sharing)](https://drive.google.com/file/d/1X7_hkTqdu2bfEHCcU0ybmFhQKxZ79Gl0/view?usp=sharing)
