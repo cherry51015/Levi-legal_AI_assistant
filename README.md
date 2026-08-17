@@ -163,7 +163,7 @@ GROQ_API_KEY=your_groq_key      # eval judge only, free tier
 ```bash
 streamlit run app.py
 ```
-Live demo: **[agent-translator-mgtwfgmztybxyfkw9pbddx.streamlit.app](https://agent-translator-mgtwfgmztybxyfkw9pbddx.streamlit.app/)**
+Demo: **[https://drive.google.com/file/d/1RkxIK-_TJeYo1Z6CEOMS9653mUB_sma3/view?usp=sharing](https://drive.google.com/file/d/1RkxIK-_TJeYo1Z6CEOMS9653mUB_sma3/view?usp=sharing)**
 
 **FastAPI backend (for programmatic access):**
 ```bash
@@ -182,7 +182,7 @@ python run_eval.py eval_dataset.jsonl
 ```
 
 ### 📎 More demos & screenshots
-[Full demo folder](https://drive.google.com/drive/folders/1lMOVf16aaa84_eu4Uv-0zCsvFVwEC49W?usp=sharing)
+[Full demo folder](https://drive.google.com/drive/folders/1T0FB7zf3jjRe3jNERkBAEYBUZY4Nw3n6?usp=sharing)
 
 ---
 
@@ -200,18 +200,18 @@ python run_eval.py eval_dataset.jsonl
 ## 🎥 Demo
 
 **1. Upload Document**
-[![Upload Demo](https://drive.google.com/uc?id=1HjetmWasqzB-6Mzava6sL9TtCqeEzmg9)](https://drive.google.com/file/d/1HjetmWasqzB-6Mzava6sL9TtCqeEzmg9/view?usp=sharing)
+[![Upload Demo](https://drive.google.com/file/d/1XlUHu1AnTYOagqHszInm6XFz4CCgUG9T/view?usp=sharing)](https://drive.google.com/file/d/1XlUHu1AnTYOagqHszInm6XFz4CCgUG9T/view?usp=sharing)
 
 **2. Run Verifier**
-[![Verifier Demo](https://drive.google.com/uc?id=1KWkSmLDbsruQ1lNCSdOtXh4bmWiHaNFr)](https://drive.google.com/file/d/1KWkSmLDbsruQ1lNCSdOtXh4bmWiHaNFr/view?usp=sharing)
+[![Verifier Demo](https://drive.google.com/file/d/1X7_hkTqdu2bfEHCcU0ybmFhQKxZ79Gl0/view?usp=sharing)](https://drive.google.com/file/d/1X7_hkTqdu2bfEHCcU0ybmFhQKxZ79Gl0/view?usp=sharing)
 
 **3. Generate Briefing**
-[![Briefing Demo](https://drive.google.com/uc?id=1fuPIDwc-Wx-TgvKo_xqwtoWmodvTUTPH)](https://drive.google.com/file/d/1fuPIDwc-Wx-TgvKo_xqwtoWmodvTUTPH/view?usp=sharing)
+[![Briefing Demo](https://drive.google.com/file/d/124HFNh4vhQxtvC1cdnDcClDGXM24rrHX/view?usp=sharing)](https://drive.google.com/file/d/124HFNh4vhQxtvC1cdnDcClDGXM24rrHX/view?usp=sharing)
 
 **4. Chat with Document**
-[![Chat Demo](https://drive.google.com/uc?id=1p4orvlVSL0TeBBOrdGmdO1QWRx7D_rwR)](https://drive.google.com/file/d/1p4orvlVSL0TeBBOrdGmdO1QWRx7D_rwR/view?usp=sharing)
+[![Chat Demo](https://drive.google.com/file/d/1Au5nDU9Qxe3MUYeBMt9iF2eQBfinrCmo/view?usp=sharing)](https://drive.google.com/file/d/1Au5nDU9Qxe3MUYeBMt9iF2eQBfinrCmo/view?usp=sharing)
 
-👉 [View all demos](https://drive.google.com/drive/folders/1lMOVf16aaa84_eu4Uv-0zCsvFVwEC49W)
+👉 [View all demos](https://drive.google.com/drive/folders/1T0FB7zf3jjRe3jNERkBAEYBUZY4Nw3n6?usp=sharing)
 
 ---
 
